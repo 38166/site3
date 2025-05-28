@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Регистрация участника</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style_register.css">
+</head>
+<body>
+  <div class="form-container">
+    <form id="registerForm">
+      <h2>Регистрация участника</h2>
+
+      <input type="text" name="fullName" placeholder="ФИО" required>
+      <input type="email" name="email" placeholder="Email" required>
+      <input type="password" name="password" placeholder="Пароль" required>
+      <input type="number" name="age" placeholder="Возраст" min="10" required>
+      <input type="text" name="city" placeholder="Город" required>
+      <textarea name="interests" placeholder="Интересы" rows="3" required></textarea>
+      <select name="role" required>
+        <option value="">-- Выберите направление --</option>
+        <option value="волонтёр">Волонтёр</option>
+        <option value="it-волонтёр">IT-волонтёр</option>
+        <option value="участник конференций">Участник конференций</option>
+        <option value="организатор">Организатор</option>
+        <option value="другое">Другое</option>
+      </select>
+
+      <button type="submit">Зарегистрироваться</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(e.target);
+      const data = Object.fromEntries(formData.entries());
+
+      const res = await fetch('/registerParticipant', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      if (res.ok) {
+        window.location.href = 'index.html';
+      } else {
+        const text = await res.text();
+        alert('Ошибка: ' + text);
+      }
+    });
+  </script>
+</body>
+</html>

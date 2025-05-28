@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Личный кабинет</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style_profile.css">
+</head>
+<body>
+ <button id="backBtn" class="auth-btn back-btn">Назад</button>
+  <div class="profile-container">
+    <h2>Личный кабинет</h2>
+
+    <form id="profileForm" class="card">
+      <h3>Профиль</h3>
+      <input type="text" name="fullName" placeholder="Имя" required>
+      <input type="email" name="email" placeholder="Email" required>
+      <button type="submit">Сохранить</button>
+      <button id="logoutBtn" class="auth-btn logout-btn">Выйти</button>
+     
+
+    </form>
+
+    <form id="eventForm" class="card">
+      <h3>Запись на мероприятие</h3>
+      <input type="text" name="eventId" placeholder="ID мероприятия" required>
+      <button type="submit">Записаться</button>
+    </form>
+  </div>
+
+  <script>
+    const token = localStorage.getItem('token');
+    if (!token) {
+      alert("Вы не авторизованы");
+      window.location.href = "index.html";
+    }
+
+document.getElementById('logoutBtn').addEventListener('click', () => {
+  localStorage.removeItem('token');
+  window.location.href = 'index.html';
+
+});
+
+document.getElementById('backBtn').addEventListener('click', () => {
+  window.location.href = 'index.html';
+});
+
+    // Загрузка данных
+    fetch('/me', {
+      headers: { Authorization: token }
+    })
+    .then(res => res.json())
+    .then(data => {
+      document.querySelector('[name="fullName"]').value = data.fullName || '';
+      document.querySelector('[name="email"]').value = data.email || '';
+    });
+
+    // Обновление профиля
+    document.getElementById('profileForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(e.target).entries());
+
+      const res = await fetch('/updateProfile', {
+        method: 'POST',
+        headers: {
+          Authorization: token,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+
+      if (res.ok) alert('Данные обновлены!');
+      else alert('Ошибка сохранения');
+    });
+
+    // Запись на событие
+    document.getElementById('eventForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(e.target).entries());
+
+      const res = await fetch('/registerToEvent', {
+        method: 'POST',
+        headers: {
+          Authorization: token,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+
+      if (res.ok) alert('Вы записались на мероприятие!');
+      else alert('Ошибка записи');
+    });
+  </script>
+</body>
+</html>

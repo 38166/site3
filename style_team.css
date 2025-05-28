@@ -1,0 +1,97 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  background: #f4f8f8;
+  padding: 60px 20px;
+}
+
+.team-container {
+  margin-top: 80px;
+  max-width: 960px;
+  width: 100%;
+}
+
+h1 {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 40px;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px 40px;
+  margin-bottom: 60px;
+}
+
+.member {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  border: 1px dashed #ccc;
+  border-radius: 12px;
+  background-color: white;
+}
+
+.member img {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #e0f2f1;
+}
+
+.member strong {
+  font-size: 16px;
+  color: #222;
+}
+
+.member span {
+  font-size: 14px;
+  color: #666;
+}
+
+.volunteer {
+  text-align: center;
+  background: #cce7e6;
+  padding: 40px 20px;
+  border-radius: 12px;
+}
+
+.volunteer h2 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.cta-btn {
+  background-color: #000;
+  color: white;
+  text-decoration: none;
+  padding: 12px 22px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.cta-btn:hover {
+  background-color: #333;
+}
+.team-section-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 60px 20px;
+}
+
+.team-container {
+  max-width: 960px;
+  width: 100%;
+}
